@@ -1,39 +1,44 @@
 import React, { ChangeEvent, useState } from "react";
 
 type Props = {
-  name: string;
+  initialName: string;
   symbol: string;
 };
 
-const Player: React.FC<Props> = ({ name, symbol }) => {
+const Player: React.FC<Props> = ({ initialName, symbol }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [playerInfo, setPlayerInfo] = useState({
-    name,
-    symbol,
-  });
+  // const [playerInfo, setPlayerInfo] = useState({
+  //   name,
+  //   symbol,
+  // });
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setPlayerInfo({
-      ...playerInfo,
-      [e.target.name]: e.target.value,
-    });
+  const [playerName, setPlayerName] = useState(initialName);
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    // setPlayerInfo({
+    //   ...playerInfo,
+    //   [e.target.name]: e.target.value,
+    // });
+
+    setPlayerName(e.target.value);
   };
 
   const handleOnEdit = () => {
+    // Updating your state based on the previous value of that state, it is better to pass function to that stat state updating function
+    // instead of setState(!state) use: setState((prevState) => !prevState) | Schedule by the React to be preformed in the future.
     setIsEditing((prevState) => !prevState);
   };
 
-  let playerName = <span className="player-name">{name}</span>;
+  let editablePlayerName = <span className="player-name">{playerName}</span>;
 
   if (isEditing) {
-    playerName = (
+    editablePlayerName = (
       <input
         type="text"
-        name="name"
         placeholder="Player name"
-        value={playerInfo.name}
+        value={playerName}
         onChange={handleOnChange}
+        required
       />
     );
   }
@@ -41,7 +46,7 @@ const Player: React.FC<Props> = ({ name, symbol }) => {
   return (
     <li>
       <span className="player">
-        {playerName}
+        {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
       </span>
       <button onClick={handleOnEdit}>{isEditing ? "Save" : "Edit"}</button>
