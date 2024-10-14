@@ -3,23 +3,15 @@ import React, { ChangeEvent, useState } from "react";
 type Props = {
   initialName: string;
   symbol: string;
+  className: string | undefined;
 };
 
-const Player: React.FC<Props> = ({ initialName, symbol }) => {
+const Player: React.FC<Props> = ({ initialName, symbol, className }) => {
   const [isEditing, setIsEditing] = useState(false);
-  // const [playerInfo, setPlayerInfo] = useState({
-  //   name,
-  //   symbol,
-  // });
 
   const [playerName, setPlayerName] = useState(initialName);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    // setPlayerInfo({
-    //   ...playerInfo,
-    //   [e.target.name]: e.target.value,
-    // });
-
     setPlayerName(e.target.value);
   };
 
@@ -44,7 +36,7 @@ const Player: React.FC<Props> = ({ initialName, symbol }) => {
   }
 
   return (
-    <li>
+    <li className={className}>
       <span className="player">
         {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
