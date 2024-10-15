@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { GameTurns } from "../types";
 
 type InitialState = null[][];
 
@@ -8,33 +9,46 @@ const initialGameBoard: InitialState = [
   [null, null, null],
 ];
 
+// type Props = {
+//   handleCurrentActivePlayer: () => void;
+//   currentActivePlayer: "X" | "O";
+// };
+
 type Props = {
-  handleCurrentActivePlayer: () => void;
-  currentActivePlayer: "X" | "O";
+  onSelectSquare: (rowIndex: number, colIndex: number) => void;
+  turns: GameTurns[];
 };
 
-const GameBoard: React.FC<Props> = ({
-  handleCurrentActivePlayer,
-  currentActivePlayer,
-}) => {
-  const [gameBoard, setGameBoard] =
-    useState<(string | null)[][]>(initialGameBoard);
+type GameBoard = ("X" | "O" | null)[][];
 
-  const handleSelectSquare = (rowIndex: number, colIndex: number): void => {
-    setGameBoard((prevGameBoard) => {
-      // Updating on a immutable way:
-      // this way we're creating a new copy of the array, and later on we update values of a newly created array, not the original one!
-      const updatedGameBoard = [
-        ...prevGameBoard.map((prevRow) => [...prevRow]),
-      ];
+const GameBoard: React.FC<Props> = ({ onSelectSquare, turns }) => {
+  // const [gameBoard, setGameBoard] =
+  //   useState<(string | null)[][]>(initialGameBoard);
+  //
+  // const handleSelectSquare = (rowIndex: number, colIndex: number): void => {
+  //   setGameBoard((prevGameBoard) => {
+  //     // Updating on a immutable way:
+  //     // this way we're creating a new copy of the array, and later on we update values of a newly created array, not the original one!
+  //     const updatedGameBoard = [
+  //       ...prevGameBoard.map((prevRow) => [...prevRow]),
+  //     ];
+  //
+  //     updatedGameBoard[rowIndex][colIndex] = currentActivePlayer;
+  //
+  //     return updatedGameBoard;
+  //   });
+  //
+  //   handleCurrentActivePlayer();
+  // };
 
-      updatedGameBoard[rowIndex][colIndex] = currentActivePlayer;
+  const gameBoard: InitialState | GameBoard = initialGameBoard;
 
-      return updatedGameBoard;
-    });
+  for (const turn of turns) {
+    const { square, player } = turn;
+    const { row, col } = square;
 
-    handleCurrentActivePlayer();
-  };
+    gameBoard[row][col] = player;
+  }
 
   // if we use index as a key - that index is not tight to the data but to the position of the data!
   return (
@@ -44,7 +58,7 @@ const GameBoard: React.FC<Props> = ({
           <ol>
             {row?.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
-                <button onClick={() => handleSelectSquare(rowIndex, colIndex)}>
+                <button onClick={() => onSelectSquare(rowIndex, colIndex)}>
                   {playerSymbol}
                 </button>
               </li>

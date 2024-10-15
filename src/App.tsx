@@ -1,12 +1,30 @@
 import Player from "./components/Player.tsx";
 import GameBoard from "./components/Gameboard.tsx";
 import { useState } from "react";
+import Log from "./components/Log.tsx";
+import type { GameTurns } from "./types";
 
 function App() {
   const [activePlayer, setActivePlayer] = useState<"X" | "O">("X");
+  const [gameTurns, setGameTurns] = useState<GameTurns[]>([]);
 
-  const handleCurrentPlayer = () => {
+  const handleCurrentPlayer = (rowIndex: number, colIndex: number): void => {
     setActivePlayer((currentPlayer) => (currentPlayer === "X" ? "O" : "X"));
+
+    setGameTurns((prevTurns) => {
+      let currentPlayer: "X" | "O" = "X";
+
+      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
+        currentPlayer = "O";
+      }
+
+      const updatedTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurns,
+      ];
+
+      return updatedTurns;
+    });
   };
 
   return (
@@ -24,12 +42,9 @@ function App() {
             className={activePlayer === "O" ? "active" : undefined}
           />
         </ol>
-        <GameBoard
-          handleCurrentActivePlayer={handleCurrentPlayer}
-          currentActivePlayer={activePlayer}
-        />
+        <GameBoard onSelectSquare={handleCurrentPlayer} turns={gameTurns} />
       </div>
-      LOGS
+      <Log gameTurns={gameTurns} />
     </main>
   );
 }
