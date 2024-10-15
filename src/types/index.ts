@@ -5,3 +5,5 @@ export type GameTurns = {
   };
   player: "X" | "O";
 };
+
+export type GameBoardType = ("X" | "O" | null)[][];

@@ -1,5 +1,5 @@
 import React from "react";
-import { GameTurns } from "../types";
+import { GameBoardType, GameTurns } from "../types";
 
 type InitialState = null[][];
 
@@ -18,8 +18,6 @@ type Props = {
   onSelectSquare: (rowIndex: number, colIndex: number) => void;
   turns: GameTurns[];
 };
-
-type GameBoard = ("X" | "O" | null)[][];
 
 const GameBoard: React.FC<Props> = ({ onSelectSquare, turns }) => {
   // const [gameBoard, setGameBoard] =
@@ -41,7 +39,7 @@ const GameBoard: React.FC<Props> = ({ onSelectSquare, turns }) => {
   //   handleCurrentActivePlayer();
   // };
 
-  const gameBoard: InitialState | GameBoard = initialGameBoard;
+  const gameBoard: InitialState | GameBoardType = initialGameBoard;
 
   for (const turn of turns) {
     const { square, player } = turn;
@@ -58,7 +56,10 @@ const GameBoard: React.FC<Props> = ({ onSelectSquare, turns }) => {
           <ol>
             {row?.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
-                <button onClick={() => onSelectSquare(rowIndex, colIndex)}>
+                <button
+                  disabled={playerSymbol !== null}
+                  onClick={() => onSelectSquare(rowIndex, colIndex)}
+                >
                   {playerSymbol}
                 </button>
               </li>
