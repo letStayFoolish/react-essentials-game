@@ -7,3 +7,5 @@ export type GameTurns = {
 };
 
 export type GameBoardType = ("X" | "O" | null)[][];
+
+export type InitialState = null[][];
