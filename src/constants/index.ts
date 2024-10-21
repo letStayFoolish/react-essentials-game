@@ -43,8 +43,13 @@ export const WINNING_COMBINATIONS = [
   ],
 ];
 
-export const initialGameBoard: InitialState = [
+export const INITIAL_GAME_BOARD: InitialState = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
 ];
+
+export const PLAYERS = {
+  X: "Player X",
+  O: "Player O",
+};

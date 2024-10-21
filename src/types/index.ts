@@ -9,3 +9,5 @@ export type GameTurns = {
 export type GameBoardType = ("X" | "O" | null)[][];
 
 export type InitialState = null[][];
+
+export type PlayerNames = { X: string; O: string };

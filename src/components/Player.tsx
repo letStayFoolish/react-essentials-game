@@ -2,11 +2,17 @@ import React, { ChangeEvent, useState } from "react";
 
 type Props = {
   initialName: string;
-  symbol: string;
+  symbol: "X" | "O";
   className: string | undefined;
+  onNameChange: (symbol: "X" | "O", newName: string) => void;
 };
 
-const Player: React.FC<Props> = ({ initialName, symbol, className }) => {
+const Player: React.FC<Props> = ({
+  initialName,
+  symbol,
+  className,
+  onNameChange,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const [playerName, setPlayerName] = useState(initialName);
@@ -19,6 +25,10 @@ const Player: React.FC<Props> = ({ initialName, symbol, className }) => {
     // Updating your state based on the previous value of that state, it is better to pass function to that stat state updating function
     // instead of setState(!state) use: setState((prevState) => !prevState) | Schedule by the React to be preformed in the future.
     setIsEditing((prevState) => !prevState);
+
+    if (isEditing) {
+      onNameChange(symbol, playerName);
+    }
   };
 
   let editablePlayerName = <span className="player-name">{playerName}</span>;
