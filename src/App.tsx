@@ -2,7 +2,7 @@ import Player from "./components/Player.tsx";
 import GameBoard from "./components/Gameboard.tsx";
 import { useState } from "react";
 import Log from "./components/Log.tsx";
-import { GameTurns, PlayerNames } from "./types";
+import { GameTurns, PlayerNames, SymbolType } from "./types";
 import { deriveGameBoard, deriveWinner, handleCurrentPlayer } from "./utils";
 import GameOver from "./components/GameOver.tsx";
 import { PLAYERS } from "./constants";
@@ -40,7 +40,7 @@ function App() {
     // }
   };
 
-  const handleOnPlayerNameChange = (symbol: "X" | "O", newName: string) => {
+  const handleOnPlayerNameChange = (symbol: SymbolType, newName: string) => {
     setPlayerNames((prevState) => ({ ...prevState, [symbol]: newName }));
   };
 

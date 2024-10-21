@@ -3,11 +3,13 @@ export type GameTurns = {
     row: number;
     col: number;
   };
-  player: "X" | "O";
+  player: SymbolType;
 };
 
-export type GameBoardType = ("X" | "O" | null)[][];
+export type GameBoardType = (SymbolType | null)[][];
 
 export type InitialState = null[][];
 
 export type PlayerNames = { X: string; O: string };
+
+export type SymbolType = "X" | "O";

@@ -1,8 +1,14 @@
-import { GameBoardType, GameTurns, InitialState, PlayerNames } from "../types";
+import type {
+  GameBoardType,
+  GameTurns,
+  InitialState,
+  PlayerNames,
+  SymbolType,
+} from "../types";
 import { INITIAL_GAME_BOARD, WINNING_COMBINATIONS } from "../constants";
 
 export function handleCurrentPlayer(gameTurns: GameTurns[]) {
-  let currentPlayer: "X" | "O" = "X";
+  let currentPlayer: SymbolType = "X";
 
   if (gameTurns.length > 0 && gameTurns[0].player === "X") {
     currentPlayer = "O";

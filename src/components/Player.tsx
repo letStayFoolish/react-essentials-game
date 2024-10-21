@@ -1,10 +1,11 @@
 import React, { ChangeEvent, useState } from "react";
+import type { SymbolType } from "../types";
 
 type Props = {
   initialName: string;
-  symbol: "X" | "O";
+  symbol: SymbolType;
   className: string | undefined;
-  onNameChange: (symbol: "X" | "O", newName: string) => void;
+  onNameChange: (symbol: SymbolType, newName: string) => void;
 };
 
 const Player: React.FC<Props> = ({
